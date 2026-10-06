@@ -1,27 +1,43 @@
 # Rapid Wash Website
 
-A single-page marketing site for Rapid Wash, a pressure-washing business in Smith County, TN.
+A plain HTML/CSS/JS website for Rapid Wash — no build step, no frameworks, no dependencies. Just files you can push straight to GitHub and host for free with GitHub Pages.
 
-## What's inside
-- `index.html` — the entire site (HTML + Tailwind via CDN + vanilla JS). No build step required.
-- `images/` — all photos and the logo used on the page.
+## File structure
 
-## Deploying to GitHub Pages
-1. Create a new GitHub repository (or use an existing one).
-2. Upload `index.html` and the `images/` folder to the repo root, keeping the folder structure intact.
+```
+index.html      the whole site
+styles.css      all styling
+script.js       mobile menu, smooth scroll, and the quote form
+assets/         photos and logo
+favicon.svg     browser tab icon
+opengraph.jpg   preview image for social media links
+robots.txt      search engine crawling rules
+```
+
+## Deploy with GitHub Pages (free hosting)
+
+1. Create a new repository on GitHub (e.g. `rapid-wash-site`).
+2. Upload all the files in this folder to the repository (drag-and-drop on github.com works, or use `git push`).
 3. In the repo, go to **Settings → Pages**.
-4. Under "Build and deployment", set **Source** to "Deploy from a branch".
-5. Choose the branch (usually `main`) and folder `/ (root)`, then save.
-6. GitHub will give you a URL like `https://yourusername.github.io/your-repo-name/` — the site will be live there within a minute or two.
+4. Under **Build and deployment**, set **Source** to `Deploy from a branch`, pick the `main` branch and `/ (root)` folder, then save.
+5. GitHub will give you a live URL like `https://yourusername.github.io/rapid-wash-site/` within a minute or two.
+
+## Using a custom domain
+
+In the same **Settings → Pages** screen, add your domain under **Custom domain**. You'll also need to point your domain's DNS at GitHub's servers — GitHub's docs walk through the exact records: https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site
+
+## About the quote form
+
+This site has no backend/database, so the "Get Your Quote Fast" form doesn't submit anywhere on its own. Right now it opens the visitor's email app with a pre-filled message addressed to:
+
+```
+rapidwashprosbros@gmail.com
+```
+
+To change that address, open `script.js` and edit the `QUOTE_REQUEST_EMAIL` constant near the top of the file.
+
+If you'd rather have form submissions land quietly in an inbox or spreadsheet (no email app popup for the visitor), a free service like [Formspree](https://formspree.io) or [Web3Forms](https://web3forms.com) can do that — it just means swapping the form's submit handler for a fetch call to their endpoint. Ask if you'd like this wired up.
 
 ## Editing content
-- Phone number, email, and copy live directly in `index.html` — search for the text you want to change.
-- The quote form saves submitted leads to the visitor's browser `localStorage` under the key `rapidWashLeads` (there's no backend). Connect it to a real form service (e.g. Formspree, Netlify Forms) or your own API if you want leads emailed or stored centrally.
-- To swap a photo, replace the file in `images/` with a new file of the same name, or update the `src="images/..."` path in `index.html`.
 
-## Local preview
-Just open `index.html` in a browser, or run a simple local server from this folder:
-```
-python3 -m http.server 8000
-```
-Then visit `http://localhost:8000`.
+Everything is in plain HTML in `index.html` — phone numbers, service list, reviews, and section text can all be edited directly, no compiling required. Colors and spacing live in `styles.css` as CSS custom properties at the top of the file.
