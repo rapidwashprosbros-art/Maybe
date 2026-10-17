@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Christmas Lighting Request | Rapid Wash</title>
+<meta name="description" content="Tell Rapid Wash about your home and we'll send you custom Christmas lighting mockups.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: hsl(210 40% 98%);
+    --fg: hsl(222 47% 11%);
+    --muted: hsl(215 16% 47%);
+    --border: hsl(214 32% 88%);
+    --primary: hsl(199 89% 48%);
+    --glow: hsl(40 96% 64%);
+    --night: hsl(222 55% 10%);
+    --card: #fff;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--fg); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  header { background: var(--night); color: #fff; padding: 2rem 1rem 3.5rem; text-align: center; }
+  header img { width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 0.75rem; display: block; }
+  header h1 { margin: 0 0 0.5rem; font-size: clamp(1.6rem, 5vw, 2.4rem); font-weight: 800; }
+  header h1 span { color: var(--glow); }
+  header p { margin: 0 auto; max-width: 36rem; color: hsl(210 40% 85%); }
+  main { max-width: 760px; margin: -2rem auto 3rem; padding: 0 1rem; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; box-shadow: 0 10px 30px -15px rgb(15 23 42 / 0.25); margin-bottom: 1.25rem; }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.75rem; list-style: none; padding: 0; margin: 0; counter-reset: s; }
+  .steps li { counter-increment: s; font-size: 0.95rem; color: var(--muted); }
+  .steps li::before { content: counter(s); display: inline-grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--glow); color: var(--night); font-weight: 700; margin-bottom: 0.35rem; }
+  .steps strong { display: block; color: var(--fg); }
+  h2 { font-size: 1.15rem; margin: 0 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--glow); display: inline-block; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .full { grid-column: 1 / -1; }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+  label, legend { font-weight: 600; font-size: 0.95rem; display: block; margin-bottom: 0.35rem; }
+  .req { color: hsl(0 72% 51%); }
+  .hint { font-weight: 400; color: var(--muted); font-size: 0.85rem; }
+  input[type=text], input[type=email], input[type=tel], input[type=date], input[type=number], select, textarea {
+    width: 100%; font: inherit; padding: 0.7rem 0.8rem; border: 1px solid var(--border); border-radius: 8px; background: #fff; color: var(--fg);
+  }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--primary); outline-offset: 1px; border-color: transparent; }
+  textarea { min-height: 100px; resize: vertical; }
+  fieldset { border: 0; padding: 0; margin: 0; }
+  .options { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0.5rem; }
+  .opt { display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.75rem; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-weight: 500; margin: 0; }
+  .opt:has(input:checked) { border-color: var(--primary); background: hsl(199 89% 48% / 0.08); }
+  .opt input { accent-color: var(--primary); width: 1.1rem; height: 1.1rem; margin: 0; flex: none; }
+  button { width: 100%; font: inherit; font-weight: 700; font-size: 1.1rem; padding: 1rem; border: 0; border-radius: 10px; background: var(--glow); color: var(--night); cursor: pointer; }
+  button:hover { filter: brightness(1.05); }
+  button:disabled { opacity: 0.6; cursor: wait; }
+  .note { text-align: center; color: var(--muted); font-size: 0.9rem; margin-top: 0.75rem; }
+  .note a { color: var(--primary); font-weight: 600; }
+  .thanks { text-align: center; padding: 2.5rem 1.5rem; }
+  .thanks h2 { border: 0; font-size: 1.6rem; }
+  .hp { position: absolute; left: -9999px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<header>
+  <img src="assets/logo.jpg" alt="Rapid Wash logo">
+  <h1>Christmas Lighting <span>Request</span></h1>
+  <p>Tell us about your home and what you're picturing. We supply the lights and do all the work.</p>
+</header>
+
+<main>
+  <section class="card" id="thanks" hidden>
+    <div class="thanks">
+      <h2>🎄 Got it, thank you!</h2>
+      <p>We received your info. We'll put together your custom mockups and reach out soon.</p>
+      <p>Questions? Call or text <a href="tel:6293011813"><strong>(629) 301-1813</strong></a></p>
+    </div>
+  </section>
+
+  <div id="formWrap">
+  <section class="card">
+    <h2>How it works</h2>
+    <ol class="steps">
+      <li><strong>You fill this out</strong>Takes about 3 minutes.</li>
+      <li><strong>We send 1–5 mockups</strong>Designs of your actual home.</li>
+      <li><strong>You pick one</strong>We come measure and take a deposit for the lights.</li>
+      <li><strong>We install</strong>We come back and hang everything.</li>
+    </ol>
+  </section>
+
+  <form id="lightsForm" action="https://formsubmit.co/rapidwashprosbros@gmail.com" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="_subject" value="🎄 New Christmas Lighting Request">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" value="https://rapidwash.us/lights.html?sent=1">
+    <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off">
+
+    <section class="card">
+      <h2>Your info</h2>
+      <div class="grid">
+        <div><label for="name">Full name <span class="req">*</span></label><input id="name" name="Name" type="text" required autocomplete="name"></div>
+        <div><label for="phone">Phone <span class="req">*</span></label><input id="phone" name="Phone" type="tel" required autocomplete="tel"></div>
+        <div><label for="email">Email <span class="req">*</span></label><input id="email" name="email" type="email" required autocomplete="email"></div>
+        <div><label for="contact">Best way to reach you</label>
+          <select id="contact" name="Preferred contact"><option>Text</option><option>Call</option><option>Email</option></select></div>
+        <div class="full"><label for="address">Property address <span class="req">*</span> <span class="hint">(where the lights go)</span></label><input id="address" name="Address" type="text" required autocomplete="street-address" placeholder="Street, city, ZIP"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Your property</h2>
+      <div class="grid">
+        <div><label for="ptype">Property type</label>
+          <select id="ptype" name="Property type"><option>Home</option><option>Business</option><option>Church</option><option>Other</option></select></div>
+        <div><label for="stories">Stories</label>
+          <select id="stories" name="Stories"><option>1 story</option><option>2 story</option><option>3+ story</option><option>Not sure</option></select></div>
+        <div><label for="outlets">Outdoor outlets?</label>
+          <select id="outlets" name="Outdoor outlets"><option>Yes, several</option><option>Just 1–2</option><option>None</option><option>Not sure</option></select></div>
+        <div><label for="hoa">HOA rules on lights?</label>
+          <select id="hoa" name="HOA"><option>No HOA</option><option>Yes, HOA</option><option>Not sure</option></select></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <fieldset>
+        <legend><h2>What do you want lit?</h2> <span class="hint">Check all that apply</span></legend>
+        <div class="options">
+          <label class="opt"><input type="checkbox" name="Areas" value="Roofline / gutters"> Roofline / gutters</label>
+          <label class="opt"><input type="checkbox" name="Areas" value="Roof peaks"> Roof peaks</label>
+          <label class="opt"><input type="checkbox" name="Areas" value="Windows"> Windows</label>
+          <label class="opt"><input type="checkbox" name="Areas" value="Front door / entry"> Front door / entry</label>
+          <label class="opt"><input type="checkbox" name="Areas" value="Porch / columns / railings"> Porch / columns / railings</label>
+          <label class="opt"><input type="checkbox" name="Areas" value="Trees (wrapped)"> Trees (wrapped)</label>
+          <label class="opt"><input type="checkbox" name="Areas" value="Bushes / shrubs"> Bushes / shrubs</label>
+          <label class="opt"><input type="checkbox" name="Areas" value="Walkway / driveway"> Walkway / driveway</label>
+          <label class="opt"><input type="checkbox" name="Areas" value="Wreaths / garland"> Wreaths / garland</label>
+          <label class="opt"><input type="checkbox" name="Areas" value="Fence"> Fence</label>
+          <label class="opt"><input type="checkbox" name="Areas" value="Not sure, give me ideas"> Not sure, give me ideas</label>
+        </div>
+      </fieldset>
+      <div class="grid" style="margin-top:1rem">
+        <div><label for="trees"># of trees to wrap</label><input id="trees" name="Trees to wrap" type="number" min="0" inputmode="numeric"></div>
+        <div><label for="bushes"># of bushes</label><input id="bushes" name="Bushes" type="number" min="0" inputmode="numeric"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Your style</h2>
+      <fieldset style="margin-bottom:1.25rem">
+        <legend>Light color</legend>
+        <div class="options">
+          <label class="opt"><input type="radio" name="Light color" value="Warm white" checked> Warm white (classic)</label>
+          <label class="opt"><input type="radio" name="Light color" value="Cool white"> Cool / bright white</label>
+          <label class="opt"><input type="radio" name="Light color" value="Multicolor"> Multicolor</label>
+          <label class="opt"><input type="radio" name="Light color" value="Red & white"> Red &amp; white</label>
+          <label class="opt"><input type="radio" name="Light color" value="Red & green"> Red &amp; green</label>
+          <label class="opt"><input type="radio" name="Light color" value="Show me options"> Show me options</label>
+        </div>
+      </fieldset>
+      <fieldset style="margin-bottom:1.25rem">
+        <legend>Overall look</legend>
+        <div class="options">
+          <label class="opt"><input type="radio" name="Look" value="Clean & elegant"> Clean &amp; elegant</label>
+          <label class="opt"><input type="radio" name="Look" value="Classic & cozy"> Classic &amp; cozy</label>
+          <label class="opt"><input type="radio" name="Look" value="Go big / all out"> Go big / all out 🎅</label>
+          <label class="opt"><input type="radio" name="Look" value="Not sure"> Not sure yet</label>
+        </div>
+      </fieldset>
+      <div class="grid">
+        <div><label for="budget">Rough budget</label>
+          <select id="budget" name="Budget"><option>Not sure yet</option><option>Under $500</option><option>$500 – $1,000</option><option>$1,000 – $2,000</option><option>$2,000+</option></select></div>
+        <div><label for="date">Want them up by</label><input id="date" name="Install by" type="date"></div>
+        <div class="full"><label for="takedown">Want us to take them down after the holidays?</label>
+          <select id="takedown" name="Takedown"><option>Yes</option><option>No</option><option>Not sure</option></select></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Photos &amp; notes</h2>
+      <div class="grid">
+        <div class="full"><label for="photo">Photo of the front of your home <span class="hint">(optional, helps us make accurate mockups)</span></label>
+          <input id="photo" name="attachment" type="file" accept="image/*"></div>
+        <div class="full"><label for="notes">Anything else?</label>
+          <textarea id="notes" name="Notes" placeholder="Ideas, inspiration, gate codes, dogs, best time to come measure..."></textarea></div>
+        <div class="full"><label for="heard">How did you hear about us?</label><input id="heard" name="Heard about us" type="text"></div>
+      </div>
+    </section>
+
+    <button type="submit" id="submitBtn">Send My Request 🎄</button>
+    <p class="note">Questions? Call or text <a href="tel:6293011813">(629) 301-1813</a></p>
+  </form>
+  </div>
+</main>
+
+<script>
+  if (new URLSearchParams(location.search).has('sent')) {
+    document.getElementById('formWrap').hidden = true;
+    document.getElementById('thanks').hidden = false;
+  }
+  document.getElementById('lightsForm').addEventListener('submit', function () {
+    var b = document.getElementById('submitBtn');
+    b.disabled = true; b.textContent = 'Sending...';
+  });
+  document.getElementById('photo').addEventListener('change', function () {
+    var f = this.files[0];
+    if (f && f.size > 9 * 1024 * 1024) { alert('That photo is too large (max ~9 MB). Please pick a smaller one or skip it.'); this.value = ''; }
+  });
+</script>
+</body>
+</html>
