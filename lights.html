@@ -168,8 +168,8 @@
         </div>
       </fieldset>
       <div class="grid">
-        <div><label for="budget">Rough budget</label>
-          <select id="budget" name="Budget"><option>Not sure yet</option><option>Under $500</option><option>$500 – $1,000</option><option>$1,000 – $2,000</option><option>$2,000+</option></select></div>
+        <div><label for="budget">Budget <span class="req">*</span> <span class="hint">(projects start at $1,000)</span></label>
+          <select id="budget" name="Budget" required><option value="" disabled selected>Choose one</option><option>$1,000 – $2,000</option><option>$2,000 – $3,500</option><option>$3,500 – $5,000</option><option>$5,000+</option></select></div>
         <div><label for="date">Want them up by</label><input id="date" name="Install by" type="date"></div>
         <div class="full"><label for="takedown">Want us to take them down after the holidays?</label>
           <select id="takedown" name="Takedown"><option>Yes</option><option>No</option><option>Not sure</option></select></div>
@@ -179,8 +179,8 @@
     <section class="card">
       <h2>Photos &amp; notes</h2>
       <div class="grid">
-        <div class="full"><label for="photo">Photo of the front of your home <span class="hint">(optional, helps us make accurate mockups)</span></label>
-          <input id="photo" name="attachment" type="file" accept="image/*"></div>
+        <div class="full"><label for="photo">Photo of the front of your home <span class="req">*</span> <span class="hint">(we use it to build your mockups)</span></label>
+          <input id="photo" name="attachment" type="file" accept="image/*" required></div>
         <div class="full"><label for="notes">Anything else?</label>
           <textarea id="notes" name="Notes" placeholder="Ideas, inspiration, gate codes, dogs, best time to come measure..."></textarea></div>
         <div class="full"><label for="heard">How did you hear about us?</label><input id="heard" name="Heard about us" type="text"></div>
@@ -204,7 +204,7 @@
   });
   document.getElementById('photo').addEventListener('change', function () {
     var f = this.files[0];
-    if (f && f.size > 9 * 1024 * 1024) { alert('That photo is too large (max ~9 MB). Please pick a smaller one or skip it.'); this.value = ''; }
+    if (f && f.size > 9 * 1024 * 1024) { alert('That photo is too large (max ~9 MB). Please pick a smaller one.'); this.value = ''; }
   });
 </script>
 </body>
