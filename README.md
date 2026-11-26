@@ -5,14 +5,36 @@ A plain HTML/CSS/JS website for Rapid Wash — no build step, no frameworks, no 
 ## File structure
 
 ```
-index.html      the whole site
+index.html      homepage (and the original quote form)
+services.html   services overview and published rates
+*-cleaning.html / house-washing.html   one page per service
+our-work.html   before/after drag sliders and photo gallery
+service-area.html   radius map, travel fees, town checker
+plans.html      yearly plan builder with instant estimate
+about.html      about Rapid Wash
+quote.html      step-by-step quote request (opens a pre-filled email)
+site.js         slider, scroll-to-clean scene, map, fees, plan builder, quote steps
+                (rates, travel fees and towns live at the top of site.js)
+lights.html     Christmas lighting request form (noindex; sends to formsubmit.co)
 styles.css      all styling
 script.js       mobile menu, smooth scroll, and the quote form
 assets/         photos and logo
 favicon.svg     browser tab icon
 opengraph.jpg   preview image for social media links
-robots.txt      search engine crawling rules
+robots.txt      search engine crawling rules (points to sitemap.xml)
+sitemap.xml     list of the site's public URLs for search engines
+llms.txt        short plain-text summary of Rapid Wash for AI systems
+llms-full.txt   full plain-text business details and FAQ for AI systems
+agents.md       notes for AI agents helping someone contact Rapid Wash
 ```
+
+## Keeping business details consistent
+
+Rates, travel fees and the town list live at the top of `site.js`. The inner pages were generated from them; if you change a rate, also update the FAQ answer in `index.html` (visible FAQ and JSON-LD), `llms.txt`, `llms-full.txt` and `agents.md`.
+
+The business description, services, service area and FAQ appear in several places: the About and FAQ sections of `index.html`, the JSON-LD structured data in `index.html`'s `<head>`, `llms.txt`, `llms-full.txt` and `agents.md`. When any business fact changes, update all of them. The visible FAQ and the FAQPage structured data must say exactly the same thing.
+
+Never add review or rating markup (AggregateRating) unless it reflects real customer reviews shown on the site.
 
 ## Deploy with GitHub Pages (free hosting)
 

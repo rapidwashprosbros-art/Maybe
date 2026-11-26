@@ -1,0 +1,35 @@
+# Rapid Wash
+
+> Rapid Wash is a locally owned exterior cleaning and Christmas lighting company based in Carthage, Tennessee, serving homeowners in Middle Tennessee.
+
+- Services: pressure washing, soft washing, window cleaning, gutter cleaning, and cleaning for driveways, sidewalks, patios and fences, plus seasonal Christmas light installation.
+- Customers: homeowners for Christmas lighting; homes and businesses for pressure washing.
+- Quotes are free. Published rates: house soft washing $0.20 per sq ft (1-story) or $0.25 per sq ft (2-story); driveways, sidewalks, patios and other concrete $0.20 per sq ft. Windows, gutters, decks, fences and new construction cleanup are quoted after seeing the property. Rapid Wash confirms the price before any work starts.
+- Travel fee per visit, by straight-line distance from Carthage, TN: none within 30 miles, $25 from 30 to 45 miles, $50 from 45 to 55 miles. Farther than 55 miles: text (629) 301-1813 and ask.
+- Christmas lighting process: request a quote, send photos of the areas you want lit, get a free design mockup, request changes, approve the design, then Rapid Wash schedules the job and installs the lights.
+- Contact: call or text (629) 301-1813, or email rapidwashprosbros@gmail.com.
+- Website: https://rapidwash.us/
+
+## Website
+
+- [Home](https://rapidwash.us/): pressure washing and exterior cleaning in Middle Tennessee
+- [Services and rates](https://rapidwash.us/services.html): all exterior cleaning services, how each surface is cleaned, and published rates
+- [House soft washing](https://rapidwash.us/house-washing.html): $0.20/sq ft for 1-story homes, $0.25/sq ft for 2-story homes
+- [Driveway and concrete cleaning](https://rapidwash.us/driveway-cleaning.html): driveways, sidewalks, patios and brick, $0.20/sq ft
+- [Deck and fence cleaning](https://rapidwash.us/deck-fence-cleaning.html): cleaning only, no staining or sealing
+- [Window cleaning](https://rapidwash.us/window-cleaning.html): interior and exterior, up to two stories, homes and businesses
+- [Gutter cleaning](https://rapidwash.us/gutter-cleaning.html): clean out and wash, no gutter guard installation
+- [New construction cleanup](https://rapidwash.us/new-construction-cleaning.html): post-build pressure washing, no debris removal
+- [Before and after](https://rapidwash.us/our-work.html): drag-to-compare before and after photos
+- [Service area and travel fees](https://rapidwash.us/service-area.html): map of the area around Carthage and per-visit travel fees by distance
+- [Yearly plan builder](https://rapidwash.us/plans.html): pick months and services and get an instant estimate
+- [About Rapid Wash](https://rapidwash.us/about.html): who Rapid Wash is and how it works
+- [Request a quote](https://rapidwash.us/quote.html): step-by-step free quote request
+- [Christmas lighting](https://rapidwash.us/#christmas-lighting): the seasonal Christmas light installation service
+- [Christmas lighting request form](https://rapidwash.us/lights.html): send home details and photos for a lighting mockup
+- [FAQ](https://rapidwash.us/#faq): answers to common customer questions
+
+## Optional
+
+- [Full business information](https://rapidwash.us/llms-full.txt): complete plain-text details and FAQ
+- [Notes for AI agents](https://rapidwash.us/agents.md): how to help someone contact Rapid Wash or request a quote

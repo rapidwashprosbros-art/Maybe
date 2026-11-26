@@ -1,2 +1,8 @@
+# Rapid Wash - https://rapidwash.us/
+# The public site is open to all crawlers, including search engines and AI crawlers.
 User-agent: *
 Allow: /
+# Developer notes for the site's code, not a customer page.
+Disallow: /README.md
+
+Sitemap: https://rapidwash.us/sitemap.xml
