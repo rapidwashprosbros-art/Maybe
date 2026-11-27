@@ -62,7 +62,6 @@
       <a href="service-area.html" data-close-menu>Service Area</a>
       <a href="plans.html" data-close-menu>Plans</a>
       <a href="about.html" data-close-menu>About</a>
-      <a href="index.html#christmas-lighting" class="nav-seasonal" data-close-menu><span class="glow-dot" aria-hidden="true"></span>Christmas Lighting</a>
       <hr />
       <a href="tel:6293011813" class="mobile-phone">
         <svg class="icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -91,10 +90,28 @@
       <div class="container">
         <div class="ba-wrap">
           <div class="ba-tabs" role="tablist" data-ba-tabs="work">
-            <button type="button" role="tab" aria-selected="true" data-ba-tab="concrete">Driveway</button>
-            <button type="button" role="tab" aria-selected="false" data-ba-tab="deck">Deck</button>
+            <button type="button" role="tab" aria-selected="true" data-ba-tab="porch">Porch</button>
+            <button type="button" role="tab" aria-selected="false" data-ba-tab="backdeckwide">Back deck</button>
+            <button type="button" role="tab" aria-selected="false" data-ba-tab="concrete">Driveway</button>
+            <button type="button" role="tab" aria-selected="false" data-ba-tab="deck">Deck railing</button>
           </div>
-          <div class="ba" data-ba data-ba-group="work" data-ba-name="concrete">
+          <div class="ba" data-ba data-ba-group="work" data-ba-name="porch">
+            <img src="assets/jobs/after-porch.jpg" alt="Covered porch after cleaning" loading="lazy" />
+            <img class="ba-before" src="assets/jobs/before-porch.jpg" alt="Stained covered porch before cleaning" loading="lazy" />
+            <input type="range" min="0" max="100" value="50" aria-label="Porch: drag to compare before and after" />
+            <span class="ba-handle" aria-hidden="true"></span>
+            <span class="tag tag-before">BEFORE</span>
+            <span class="tag tag-after">AFTER</span>
+          </div>
+          <div class="ba" data-ba data-ba-group="work" data-ba-name="backdeckwide" hidden>
+            <img src="assets/jobs/after-back-deck-video.jpg" alt="Back deck after cleaning" loading="lazy" />
+            <img class="ba-before" src="assets/jobs/before-back-deck.jpg" alt="Back deck before cleaning" loading="lazy" />
+            <input type="range" min="0" max="100" value="50" aria-label="Back deck: drag to compare before and after" />
+            <span class="ba-handle" aria-hidden="true"></span>
+            <span class="tag tag-before">BEFORE</span>
+            <span class="tag tag-after">AFTER</span>
+          </div>
+          <div class="ba" data-ba data-ba-group="work" data-ba-name="concrete" hidden>
             <img src="assets/concrete-after.jpg" alt="Concrete driveway after cleaning" loading="lazy" />
             <img class="ba-before" src="assets/concrete-before.jpg" alt="Dirty concrete driveway before cleaning" loading="lazy" />
             <input type="range" min="0" max="100" value="50" aria-label="Driveway: drag to compare before and after" />
@@ -105,7 +122,7 @@
           <div class="ba" data-ba data-ba-group="work" data-ba-name="deck" hidden>
             <img src="assets/deck-after.jpg" alt="Clean white deck railing after cleaning" loading="lazy" />
             <img class="ba-before" src="assets/deck-before.jpg" alt="Deck railing with mildew before cleaning" loading="lazy" />
-            <input type="range" min="0" max="100" value="50" aria-label="Deck: drag to compare before and after" />
+            <input type="range" min="0" max="100" value="50" aria-label="Deck railing: drag to compare before and after" />
             <span class="ba-handle" aria-hidden="true"></span>
             <span class="tag tag-before">BEFORE</span>
             <span class="tag tag-after">AFTER</span>
@@ -117,14 +134,57 @@
 
     <section class="bg-muted">
       <div class="container">
-        <div class="section-header"><h2>More examples</h2></div>
-        <div class="work-grid">
-          <figure><img src="assets/clean-driveway.jpg" alt="Clean concrete driveway" loading="lazy" /><figcaption>Driveway</figcaption></figure>
-          <figure><img src="assets/roof-gutters.jpg" alt="Roofline and gutters being cleaned" loading="lazy" /><figcaption>Roofline and gutters</figcaption></figure>
-          <figure><img src="assets/patio-clean-1.jpg" alt="Clean patio" loading="lazy" /><figcaption>Patio</figcaption></figure>
-          <figure><img src="assets/patio-clean-2.jpg" alt="Clean stone walkway" loading="lazy" /><figcaption>Stone walkway</figcaption></figure>
-          <figure><img src="assets/patio-clean-3.jpg" alt="Clean exterior" loading="lazy" /><figcaption>Exterior</figcaption></figure>
-          <figure><img src="assets/deck-after.jpg" alt="Clean deck railing" loading="lazy" /><figcaption>Deck railing</figcaption></figure>
+        <div class="section-header"><span class="kicker">On the Job</span><h2>Watch it come clean</h2><p>Short clips from our own jobs.</p></div>
+        <div class="reels">
+          <figure class="reel">
+            <video muted loop playsinline preload="none" poster="assets/jobs/clip-surface-cleaner.jpg" data-autoplay aria-label="Surface cleaner on a porch slab, no streaks">
+              <source src="assets/jobs/clip-surface-cleaner.mp4" type="video/mp4" />
+            </video>
+            <figcaption>Surface cleaner on a porch slab, no streaks</figcaption>
+          </figure>
+          <figure class="reel">
+            <video muted loop playsinline preload="none" poster="assets/jobs/clip-gutter-pole.jpg" data-autoplay aria-label="Washing gutters from the ground">
+              <source src="assets/jobs/clip-gutter-pole.mp4" type="video/mp4" />
+            </video>
+            <figcaption>Washing gutters from the ground</figcaption>
+          </figure>
+          <figure class="reel">
+            <video muted loop playsinline preload="none" poster="assets/jobs/clip-porch-wand.jpg" data-autoplay aria-label="Stained porch slab coming clean">
+              <source src="assets/jobs/clip-porch-wand.mp4" type="video/mp4" />
+            </video>
+            <figcaption>Stained porch slab coming clean</figcaption>
+          </figure>
+          <figure class="reel">
+            <video muted loop playsinline preload="none" poster="assets/jobs/clip-steps.jpg" data-autoplay aria-label="Concrete steps coming clean">
+              <source src="assets/jobs/clip-steps.mp4" type="video/mp4" />
+            </video>
+            <figcaption>Concrete steps coming clean</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white">
+      <div class="container">
+        <div class="section-header"><span class="kicker">Job Photos</span><h2>Finished jobs</h2><p>Real Rapid Wash jobs. No stock photos.</p></div>
+        <div class="ba-tabs work-filter" role="group" aria-label="Filter photos" data-work-filter>
+          <button type="button" aria-pressed="true" data-filter="all">All</button>
+          <button type="button" aria-pressed="false" data-filter="house">House washing</button>
+          <button type="button" aria-pressed="false" data-filter="concrete">Concrete</button>
+          <button type="button" aria-pressed="false" data-filter="deck">Decks</button>
+          <button type="button" aria-pressed="false" data-filter="new">New construction</button>
+        </div>
+        <div class="work-grid" data-work-grid>
+          <figure data-cat="new"><img src="assets/jobs/g-new-build-porch.jpg" alt="New build front porch" loading="lazy" /><figcaption>New build front porch</figcaption></figure>
+          <figure data-cat="concrete"><img src="assets/jobs/c-ac-pad.jpg" alt="AC pad mid-wash" loading="lazy" /><figcaption>AC pad mid-wash</figcaption></figure>
+          <figure data-cat="new"><img src="assets/jobs/g-new-build-siding.jpg" alt="New build siding" loading="lazy" /><figcaption>New build siding</figcaption></figure>
+          <figure data-cat="new"><img src="assets/jobs/g-new-build-side.jpg" alt="New build siding and steps" loading="lazy" /><figcaption>New build siding and steps</figcaption></figure>
+          <figure data-cat="house"><img src="assets/jobs/after-white-house-side.jpg" alt="Siding and gutter line, finished" loading="lazy" /><figcaption>Siding and gutter line, finished</figcaption></figure>
+          <figure data-cat="deck"><img src="assets/jobs/after-back-deck.jpg" alt="Back deck, finished" loading="lazy" /><figcaption>Back deck, finished</figcaption></figure>
+          <figure data-cat="deck"><img src="assets/jobs/after-deck-rails.jpg" alt="Deck rails, finished" loading="lazy" /><figcaption>Deck rails, finished</figcaption></figure>
+          <figure data-cat="concrete"><img src="assets/jobs/after-covered-patio.jpg" alt="Covered patio, finished" loading="lazy" /><figcaption>Covered patio, finished</figcaption></figure>
+          <figure data-cat="concrete"><img src="assets/jobs/after-porch.jpg" alt="Long covered porch, finished" loading="lazy" /><figcaption>Long covered porch, finished</figcaption></figure>
+          <figure data-cat="house"><img src="assets/jobs/g-siding-ac.jpg" alt="Siding along the AC side" loading="lazy" /><figcaption>Siding along the AC side</figcaption></figure>
         </div>
       </div>
     </section>
@@ -156,7 +216,7 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <img src="assets/logo.jpg" alt="Rapid Wash Logo" />
-          <p>Professional residential and commercial pressure washing, plus seasonal Christmas light installation, making Middle Tennessee homes shine, one property at a time.</p>
+          <p>Professional residential and commercial pressure washing, making Middle Tennessee homes shine, one property at a time.</p>
         </div>
 
         <div>
@@ -190,7 +250,6 @@
             <li><a href="service-area.html">Service Area &amp; Travel Fees</a></li>
             <li><a href="plans.html">Maintenance Plans</a></li>
             <li><a href="about.html">About Rapid Wash</a></li>
-            <li><a href="index.html#christmas-lighting">Christmas Lighting</a></li>
             <li><a href="index.html#faq">FAQ</a></li>
           </ul>
         </div>

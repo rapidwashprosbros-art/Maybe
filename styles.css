@@ -222,6 +222,7 @@ button {
   display: flex;
   background: none;
   border: none;
+  color: hsl(var(--foreground)); /* buttons otherwise take the browser's color, which is white in dark mode */
   padding: 0.5rem;
   z-index: 50;
   cursor: pointer;
@@ -2170,23 +2171,17 @@ section {
 
 /* Scroll-to-clean scene: the after photo wipes over the before photo */
 .clean-scene { position: relative; background: hsl(var(--night)); color: white; }
-.clean-scene.is-live { height: 220vh; }
-.clean-sticky { position: relative; height: 100vh; min-height: 520px; overflow: hidden; }
-.clean-scene.is-live .clean-sticky { position: sticky; top: 0; }
+.clean-sticky { position: relative; height: 85vh; height: 85svh; min-height: 520px; max-height: 900px; overflow: hidden; touch-action: pan-y; }
 .clean-sticky img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.clean-scene.is-live .clean-after { clip-path: inset(0 calc(100% - var(--clean, 0%)) 0 0); }
-.clean-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8, 15, 35, 0.1) 35%, rgba(8, 15, 35, 0.8)); }
-.clean-line {
-  position: absolute; top: 0; bottom: 0; left: var(--clean, 100%); width: 3px; margin-left: -1.5px;
-  background: white; box-shadow: 0 0 18px rgba(255, 255, 255, 0.8); display: none;
-}
-.clean-scene.is-live:not(.is-clean) .clean-line { display: block; }
+.clean-canvas { position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity 0.8s ease; }
+.clean-scene.is-clean .clean-canvas { opacity: 0; pointer-events: none; }
+.clean-scene.is-regrow .clean-canvas { transition: opacity 6s ease-in; }
+.clean-fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.clean-shade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(8, 15, 35, 0.1) 35%, rgba(8, 15, 35, 0.8)); }
 .clean-copy { position: absolute; left: 0; right: 0; bottom: 3rem; }
 .clean-copy h2 { font-size: clamp(2.25rem, 7vw, 4.5rem); line-height: 1; margin: 0 0 0.75rem; letter-spacing: -0.02em; }
 .clean-copy h2 em { font-style: normal; color: hsl(var(--primary)); }
 .clean-copy p { font-size: 1.1rem; max-width: 34rem; margin: 0 0 1.5rem; color: rgba(255, 255, 255, 0.85); }
-.clean-hint { font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.75; margin-top: 1rem; }
-.clean-scene.is-clean .clean-hint, .clean-scene:not(.is-live) .clean-hint { visibility: hidden; }
 
 /* Method trio */
 .method-grid { display: grid; gap: 1.25rem; }
@@ -2292,7 +2287,7 @@ section {
 .wiz .form-error { color: #fca5a5; display: block; min-height: 1.25rem; margin-top: 0.5rem; }
 .wiz-fee { color: hsl(var(--primary)); font-weight: 600; margin-top: 0.75rem; min-height: 1.5rem; }
 .wiz-nav { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; align-items: center; }
-.wiz-nav .btn-back { background: none; border: 1px solid rgba(255, 255, 255, 0.3); color: white; }
+.wiz-nav .btn-back { background: none; border: 1px solid hsl(var(--border)); color: hsl(var(--foreground)); }
 .wiz-hint { font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); }
 .wiz-done { text-align: center; padding: 2rem 0; }
 .wiz-done .quote-success-icon { margin: 0 auto 1.5rem; }
@@ -2340,3 +2335,11 @@ a.method:hover { border-color: hsl(var(--primary)); transform: translateY(-2px);
 .leaflet-tooltip.town-tip { font-family: 'Outfit', sans-serif; font-size: 13px; color: hsl(var(--secondary)); border: none; border-radius: 6px; box-shadow: 0 2px 8px rgba(15, 23, 42, 0.18); padding: 3px 8px; }
 .leaflet-tooltip.town-tip.home { font-weight: 800; color: hsl(var(--primary)); }
 .leaflet-tooltip.town-tip::before { display: none; }
+/* Job clips ("reels"): portrait cards that scroll sideways on phones */
+.reels { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(200px, 68%); gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 0.5rem; }
+@media (min-width: 768px) { .reels { grid-auto-flow: row; grid-template-columns: repeat(4, 1fr); overflow: visible; } }
+.reel { margin: 0; scroll-snap-align: start; }
+.reel video { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 1rem; background: hsl(var(--secondary)); display: block; box-shadow: 0 20px 40px -24px rgba(15, 23, 42, 0.45); }
+.reel figcaption { margin-top: 0.6rem; font-size: 0.95rem; color: hsl(var(--muted-foreground)); }
+.work-filter button[aria-pressed="true"] { background: hsl(var(--secondary)); color: white; border-color: hsl(var(--secondary)); }
+.work-grid figure[hidden] { display: none; }

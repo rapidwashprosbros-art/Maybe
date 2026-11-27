@@ -101,6 +101,32 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   });
 
+  // ---------- Job clips: play only while on screen (saves data); controls instead if motion is reduced ----------
+  const clips = document.querySelectorAll("video[data-autoplay]");
+  if (clips.length) {
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      clips.forEach((v) => (v.controls = true));
+    } else {
+      const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+        if (e.isIntersecting) e.target.play().catch(() => (e.target.controls = true));
+        else e.target.pause();
+      }), { threshold: 0.4 });
+      clips.forEach((v) => io.observe(v));
+    }
+  }
+
+  // ---------- Our Work: filter photos by job type ----------
+  const filter = document.querySelector("[data-work-filter]");
+  if (filter) {
+    const buttons = filter.querySelectorAll("[data-filter]");
+    buttons.forEach((b) => b.addEventListener("click", () => {
+      buttons.forEach((x) => x.setAttribute("aria-pressed", x === b));
+      document.querySelectorAll("[data-work-grid] figure").forEach((fig) => {
+        fig.hidden = b.dataset.filter !== "all" && fig.dataset.cat !== b.dataset.filter;
+      });
+    }));
+  }
+
   // ---------- Service list: photo follows the hovered row ----------
   const peek = document.querySelector("[data-peek-img]");
   if (peek) {
@@ -111,22 +137,135 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ---------- Scroll-to-clean scene ----------
-  // The "after" photo wipes over the "before" photo as the section scrolls past.
+  // ---------- Self-rinsing clean scene ----------
+  // When the photo is on screen, streams of water run down it and wash the grime (a canvas over the clean
+  // photo) away from the top down. It holds clean, the grime slowly regrows, then it rinses again.
+  // No interaction needed and page scrolling is never held. Without JS the clean photo simply shows.
   const scene = document.querySelector("[data-clean-scene]");
-  if (scene && !reduceMotion) {
-    scene.classList.add("is-live");
-    let ticking = false;
-    const update = () => {
-      ticking = false;
-      const rect = scene.getBoundingClientRect();
-      const travel = rect.height - window.innerHeight;
-      const p = travel > 0 ? Math.min(1, Math.max(0, -rect.top / travel)) : 1;
-      scene.style.setProperty("--clean", (p * 100).toFixed(1) + "%");
-      scene.classList.toggle("is-clean", p > 0.85);
+  if (scene) {
+    const stage = scene.querySelector(".clean-sticky");
+    const before = stage.querySelector("img:not(.clean-after)");
+    const shade = stage.querySelector(".clean-shade");
+    const mk = (cls) => { const c = document.createElement("canvas"); c.className = cls; c.setAttribute("aria-hidden", "true"); stage.insertBefore(c, shade); return c; };
+    const grime = mk("clean-canvas"), water = mk("clean-fx");
+    const g = grime.getContext("2d"), w = water.getContext("2d");
+    const COLS = 32, ROWS = 18, DONE_AT = 0.9;     // coverage grid: fade the rest once 90% is washed
+    const HOLD = 3000, REGROW = 6000, REST = 1500;  // keep REGROW in sync with .is-regrow in styles.css
+    let cells, washed = 0, width = 0, streams = [], running = false, inView = false, phase = "idle", last = 0, startedAt = 0;
+
+    const paintGrime = () => {
+      if (!before.naturalWidth) return false;
+      const r = stage.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = Math.round(r.width);
+      grime.width = water.width = Math.round(r.width * dpr);
+      grime.height = water.height = Math.round(r.height * dpr);
+      const s = Math.max(grime.width / before.naturalWidth, grime.height / before.naturalHeight); // object-fit: cover
+      const iw = before.naturalWidth * s, ih = before.naturalHeight * s;
+      g.globalCompositeOperation = "source-over";
+      g.drawImage(before, (grime.width - iw) / 2, (grime.height - ih) / 2, iw, ih);
+      cells = new Uint8Array(COLS * ROWS); washed = 0;
+      scene.classList.add("is-wipe");
+      return true;
     };
-    window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
-    update();
+    const erase = (x, y, rad) => {
+      const grd = g.createRadialGradient(x, y, rad * 0.3, x, y, rad);
+      grd.addColorStop(0, "rgba(0,0,0,1)"); grd.addColorStop(1, "rgba(0,0,0,0)");
+      g.fillStyle = grd; g.beginPath(); g.arc(x, y, rad, 0, Math.PI * 2); g.fill();
+      const cx = Math.floor((x / grime.width) * COLS), cy = Math.floor((y / grime.height) * ROWS);
+      const span = Math.max(0, Math.floor(((rad * 0.6) / grime.width) * COLS));
+      for (let i = -span; i <= span; i++) {
+        const gx = cx + i, k = cy * COLS + gx;
+        if (gx >= 0 && gx < COLS && cy >= 0 && cy < ROWS && !cells[k]) { cells[k] = 1; washed++; }
+      }
+    };
+    const newStream = (W, H, delay) => ({
+      x: Math.random() * W, y: -Math.random() * H * 0.15, delay,
+      v: H * (0.00018 + Math.random() * 0.00022),        // px per ms: about 3-6 s top to bottom
+      wob: Math.random() * Math.PI * 2, wobAmp: W * (0.002 + Math.random() * 0.004),
+      w: W * (0.018 + Math.random() * 0.02), trail: [],
+    });
+    const startRinse = () => {
+      const W = grime.width, H = grime.height;
+      streams = Array.from({ length: Math.round(14 + W / 90) }, (_, i) => newStream(W, H, i * 90 + Math.random() * 600));
+      phase = "rinse"; startedAt = performance.now();
+      scene.classList.remove("is-clean", "is-regrow");
+      loop();
+    };
+    const loop = () => { if (!running) { running = true; last = performance.now(); requestAnimationFrame(frame); } };
+    const frame = (now) => {
+      const dt = Math.min(50, now - last); last = now;
+      const W = water.width, H = water.height, t = now - startedAt;
+      w.clearRect(0, 0, W, H);
+      if (phase === "rinse") {
+        g.globalCompositeOperation = "destination-out";
+        streams.forEach((s) => {
+          if (t < s.delay) return;
+          if (s.y < H + s.w * 2) {
+            s.y += s.v * dt * (1 + Math.min(1, s.y / H) * 0.6); // speeds up a little as it runs down
+            s.wob += dt * 0.004;
+            s.x += Math.sin(s.wob) * s.wobAmp * 0.08;
+            erase(s.x, s.y, s.w);
+            s.trail.push({ x: s.x, y: s.y });
+          }
+          // the wet trail spreads sideways over time so neighbouring streams join up
+          if (s.trail.length > 4) {
+            const p = s.trail[Math.floor(Math.random() * s.trail.length)];
+            erase(p.x + (Math.random() - 0.5) * s.w * 2, p.y, s.w * (1.2 + Math.min(2.2, t / 2500)));
+          }
+          // the visible water: a faint wet film along the run, and a thin see-through streak that fades toward the top
+          w.lineCap = "round"; w.lineJoin = "round";
+          if (s.trail.length > 2) {
+            w.strokeStyle = "rgba(210, 235, 255, 0.07)"; w.lineWidth = s.w * 1.3;
+            w.beginPath(); w.moveTo(s.trail[0].x, s.trail[0].y);
+            for (let i = 3; i < s.trail.length; i += 3) w.lineTo(s.trail[i].x, s.trail[i].y);
+            w.stroke();
+          }
+          const len = Math.min(s.trail.length, 30);
+          if (len > 2 && s.y < H + s.w * 2) {
+            const tail = s.trail.slice(-len), a = tail[0];
+            const grad = w.createLinearGradient(a.x, a.y, s.x, s.y);
+            grad.addColorStop(0, "rgba(230, 244, 255, 0)"); grad.addColorStop(1, "rgba(230, 244, 255, 0.42)");
+            w.strokeStyle = grad; w.lineWidth = Math.max(1.5, s.w * 0.22);
+            w.beginPath(); w.moveTo(a.x, a.y); tail.forEach((q) => w.lineTo(q.x, q.y)); w.stroke();
+            w.fillStyle = "rgba(255, 255, 255, 0.5)"; // small glint at the leading edge
+            w.beginPath(); w.arc(s.x, s.y, Math.max(1.2, s.w * 0.14), 0, Math.PI * 2); w.fill();
+          }
+        });
+        if (washed / cells.length > DONE_AT || t > 9000) {
+          phase = "hold"; startedAt = now; scene.classList.add("is-clean");
+        }
+      } else if (phase === "hold" && t > HOLD) {
+        // grime grows back slowly (CSS fade), then the next rinse runs if the photo is still on screen
+        paintGrime(); scene.classList.add("is-regrow"); scene.classList.remove("is-clean");
+        phase = "regrow"; startedAt = now;
+      } else if (phase === "regrow" && t > REGROW + REST) {
+        scene.classList.remove("is-regrow");
+        if (inView) startRinse(); else phase = "idle";
+      }
+      if (phase === "idle") { running = false; w.clearRect(0, 0, W, H); return; }
+      requestAnimationFrame(frame);
+    };
+
+    const begin = () => {
+      if (phase !== "idle" || !inView || !cells) return;
+      if (reduceMotion) { // no running water: a gentle one-time fade from dirty to clean
+        phase = "done"; scene.classList.add("is-clean"); return;
+      }
+      startRinse();
+    };
+    before.loading = "eager"; // the canvas needs this photo up front
+    const ready = () => { if (!cells && paintGrime()) begin(); };
+    before.addEventListener("load", ready);
+    if (before.decode) before.decode().then(ready, () => {});
+    if (before.complete && before.naturalWidth) ready();
+    window.addEventListener("resize", () => {
+      const r = stage.getBoundingClientRect();
+      if (Math.round(r.width) !== width && phase === "idle" && cells) paintGrime(); // ignore height-only resizes (mobile URL bar)
+    });
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(([e]) => { inView = e.isIntersecting; begin(); }, { threshold: 0.35 }).observe(stage);
+    } else { inView = true; begin(); }
+    console.assert(DONE_AT > 0.5 && REGROW > 0, "rinse settings look wrong");
   }
 
   // ---------- Service area: town lookup ----------
@@ -189,10 +328,15 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
     const touch = window.matchMedia("(pointer: coarse)").matches; // don't trap page scrolling on phones
     const m = L.map(box, { scrollWheelZoom: false, dragging: !touch, tap: false, zoomSnap: 0.25 });
+    // If the tile server is blocked or down (no tile ever loads), show the drawn map instead of broken squares.
+    let tileOk = false;
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 18,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(m);
+    })
+      .on("tileload", () => { tileOk = true; })
+      .on("tileerror", () => { if (!tileOk && box.isConnected) { m.remove(); box.remove(); svgMap.style.display = ""; } })
+      .addTo(m);
 
     const HOME = [36.2523, -85.9516];
     const BLUE = "#0ea5e9";
