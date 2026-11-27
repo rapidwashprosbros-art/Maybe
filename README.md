@@ -20,7 +20,7 @@ styles.css      all styling
 script.js       mobile menu, smooth scroll, and the quote form
 assets/         photos and logo
 favicon.svg     browser tab icon
-opengraph.jpg   preview image for social media links
+og-pressure-washing.jpg   preview image for social media links (pressure washing card)
 robots.txt      search engine crawling rules (points to sitemap.xml)
 sitemap.xml     list of the site's public URLs for search engines
 llms.txt        short plain-text summary of Rapid Wash for AI systems
