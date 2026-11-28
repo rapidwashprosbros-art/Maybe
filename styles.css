@@ -2181,6 +2181,7 @@ section {
 .clean-canvas { position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity 0.8s ease; }
 .clean-scene.is-clean .clean-canvas { opacity: 0; pointer-events: none; }
 .clean-scene.is-regrow .clean-canvas { transition: opacity 6s ease-in; }
+.clean-scene.is-prep .clean-after { visibility: hidden; }
 .clean-fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .clean-shade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(8, 15, 35, 0.1) 35%, rgba(8, 15, 35, 0.8)); }
 .clean-copy { position: absolute; left: 0; right: 0; bottom: 3rem; }

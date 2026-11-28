@@ -148,6 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const shade = stage.querySelector(".clean-shade");
     const mk = (cls) => { const c = document.createElement("canvas"); c.className = cls; c.setAttribute("aria-hidden", "true"); stage.insertBefore(c, shade); return c; };
     const grime = mk("clean-canvas"), water = mk("clean-fx");
+    scene.classList.add("is-prep"); // show the dirty photo until the grime layer is painted
     const g = grime.getContext("2d"), w = water.getContext("2d");
     const COLS = 32, ROWS = 18, DONE_AT = 0.9;     // coverage grid: fade the rest once 90% is washed
     const HOLD = 3000, REGROW = 6000, REST = 1500;  // keep REGROW in sync with .is-regrow in styles.css
@@ -163,8 +164,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const iw = before.naturalWidth * s, ih = before.naturalHeight * s;
       g.globalCompositeOperation = "source-over";
       g.drawImage(before, (grime.width - iw) / 2, (grime.height - ih) / 2, iw, ih);
+      // On a first visit the photo can report a size before it's drawable, leaving the layer blank:
+      // check the paint took, and if not, try again shortly instead of rinsing a clean photo.
+      if (!g.getImageData(grime.width >> 1, grime.height >> 1, 1, 1).data[3]) {
+        setTimeout(() => { if (!cells) ready(); }, 250);
+        return false;
+      }
       cells = new Uint8Array(COLS * ROWS); washed = 0;
       scene.classList.add("is-wipe");
+      scene.classList.remove("is-prep");
       return true;
     };
     const erase = (x, y, rad) => {
